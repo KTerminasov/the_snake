@@ -1,3 +1,5 @@
+"""Змейка. Автор: Кирилл Терминасов
+"""
 from random import choice, randint
 
 import pygame
@@ -40,7 +42,32 @@ clock = pygame.time.Clock()
 
 
 # Тут опишите все классы игры.
-...
+class GameObject:
+    """Базовый класс, от которого наследуются другие игровые объекты.
+    Содержит общие атрибуты игровых объектов."""
+
+    def __init__(self, position: tuple, body_color: None):
+        """Инициализация класса. Атрибуты:
+        position - позиция объекта на игровом поле;
+        body_color - цвет объекта."""
+        if position is None:
+            position = (SCREEN_WIDTH//2, SCREEN_HEIGHT//2)
+        self.position = position
+        self.body_color = body_color
+
+    def draw(self):
+        """Метод класса для отрисовки объекта на экране.
+        Предназначен для переопределения в дочерних классах.
+        """
+        pass
+
+
+class Apple(GameObject):
+    """Класс, предназначенный для описания яблока
+    и действий с ним.
+    """
+    def __init__(self):
+        super().__init__()
 
 
 def main():
@@ -52,8 +79,8 @@ def main():
     # while True:
     #     clock.tick(SPEED)
 
-        # Тут опишите основную логику игры.
-        # ...
+    # Тут опишите основную логику игры.
+    # ...
 
 
 if __name__ == '__main__':
