@@ -1,5 +1,4 @@
-"""Змейка. Автор: Кирилл Терминасов
-"""
+"""Змейка. Автор: Кирилл Терминасов"""
 from random import choice, randint
 
 import pygame
@@ -44,16 +43,16 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject:
     """Базовый класс, от которого наследуются другие игровые объекты.
-    Содержит общие атрибуты игровых объектов."""
+    Содержит общие атрибуты игровых объектов.
+    """
 
-    def __init__(self, position: tuple, body_color: None):
+    def __init__(self):
         """Инициализация класса. Атрибуты:
         position - позиция объекта на игровом поле;
-        body_color - цвет объекта."""
-        if position is None:
-            position = (SCREEN_WIDTH//2, SCREEN_HEIGHT//2)
-        self.position = position
-        self.body_color = body_color
+        body_color - цвет объекта.
+        """
+        self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+        self.body_color = None
 
     def draw(self):
         """Метод класса для отрисовки объекта на экране.
@@ -63,11 +62,34 @@ class GameObject:
 
 
 class Apple(GameObject):
-    """Класс, предназначенный для описания яблока
-    и действий с ним.
-    """
+    """Класс описывает яблоко и действия с ним."""
+
     def __init__(self):
-        super().__init__()
+        """Инициализация класса. Атрибуты (наследуются от GameObject):
+        position - задается случайным образом.
+        color - Красный (255, 0, 0)
+        """
+        super().__init__(self.randomize_position(), (255, 0, 0))
+
+    @staticmethod
+    def ramdomize_position():
+        """Метод класса для получения случайных координат
+        на игровом поле.
+        """
+        return ((randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)))
+
+    def draw(self):
+        """Переопределение метода draw для отрисовки яблока."""
+        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, self.body_color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+
+
+class Snake(GameObject):
+    """Класс описывает змейку и её поведение."""
+
+    def __init__(self, body_color=(0, 255, 0)):
+        super().__init__(body_color)
 
 
 def main():
@@ -86,12 +108,6 @@ def main():
 if __name__ == '__main__':
     main()
 
-
-# Метод draw класса Apple
-# def draw(self):
-#     rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
-#     pygame.draw.rect(screen, self.body_color, rect)
-#     pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 # # Метод draw класса Snake
 # def draw(self):
