@@ -115,8 +115,8 @@ class Snake(GameObject):
         self.update_direction()
 
         curr_pos = self.get_head_position()
-        new_x = (curr_pos[0]+self.direction[0]*GRID_SIZE) % SCREEN_WIDTH
-        new_y = (curr_pos[1]+self.direction[1]*GRID_SIZE) % SCREEN_HEIGHT
+        new_x = (curr_pos[0] + self.direction[0]*GRID_SIZE) % SCREEN_WIDTH
+        new_y = (curr_pos[1] + self.direction[1]*GRID_SIZE) % SCREEN_HEIGHT
         new_pos = (new_x, new_y)
 
         self.positions = [new_pos] + self.positions
