@@ -76,8 +76,8 @@ class Apple(GameObject):
 
     def randomize_position(self):
         """Метод класса для получения случайных координат на игровом поле."""
-        x = randint(0, (SCREEN_WIDTH // 20) - 1) * 20
-        y = randint(0, (SCREEN_HEIGHT // 20) - 1) * 20
+        x = randint(0, (GRID_WIDTH) - 1) * 20
+        y = randint(0, (GRID_HEIGHT) - 1) * 20
         self.position = (x, y)
 
     def draw(self):
@@ -90,7 +90,7 @@ class Apple(GameObject):
 class Snake(GameObject):
     """Класс описывает змейку и её поведение."""
 
-    def __init__(self, body_color=(0, 255, 0)):
+    def __init__(self, record=1, body_color=(0, 255, 0)):
         """Инициализация класса.
 
         Атрибуты:
@@ -103,7 +103,7 @@ class Snake(GameObject):
         super().__init__()
         self.body_color = (0, 255, 0)
         self.length = 1
-        self.record_length = self.length
+        self.record_length = record
         self.positions = [self.position]
         self.direction = RIGHT
         self.next_direction = None
@@ -156,8 +156,7 @@ class Snake(GameObject):
             self.record_length = self.length
             pygame.display.set_caption(f'Змейка. Рекорд: {self.record_length}')
 
-        self.length = 1
-        self.positions = [self.position]
+        self.__init__(record=self.record_length)
 
 
 def handle_keys(game_object, stop_game):
