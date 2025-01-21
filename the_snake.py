@@ -9,6 +9,9 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
+# Константа для остановки игры
+STOP_GAME = False
+
 # Направления движения:
 UP = (0, -1)
 DOWN = (0, 1)
@@ -151,7 +154,7 @@ class Snake(GameObject):
         self.positions = [self.position]
 
 
-def handle_keys(game_object):
+def handle_keys(game_object, stop_game):
     """Функция обработки действий пользователя."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -166,6 +169,9 @@ def handle_keys(game_object):
                 game_object.next_direction = LEFT
             elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
                 game_object.next_direction = RIGHT
+            elif event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                raise SystemExit
 
 
 def main():
@@ -175,11 +181,12 @@ def main():
     # Тут нужно создать экземпляры классов.
     snake = Snake()
     apple = Apple()
+    stop_game = False
 
-    while True:
+    while not stop_game:
         clock.tick(SPEED)
 
-        handle_keys(snake)
+        handle_keys(snake, stop_game)
         snake.move()
         curr_pos = snake.get_head_position()
 
