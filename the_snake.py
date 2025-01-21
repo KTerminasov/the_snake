@@ -95,6 +95,7 @@ class Snake(GameObject):
 
         Атрибуты:
         length - длина змейки;
+        record_length - рекордная длина змейки;
         positions — список позиций всех сегментов тела змейки;
         direction — направление движения змейки;
         next_direction — следующее направление движения.
@@ -102,6 +103,7 @@ class Snake(GameObject):
         super().__init__()
         self.body_color = (0, 255, 0)
         self.length = 1
+        self.record_length = self.length
         self.positions = [self.position]
         self.direction = RIGHT
         self.next_direction = None
@@ -150,6 +152,10 @@ class Snake(GameObject):
 
     def reset(self):
         """Сброс змейки после столкновения."""
+        if self.length > self.record_length:
+            self.record_length = self.length
+            pygame.display.set_caption(f'Змейка. Рекорд: {self.record_length}')
+
         self.length = 1
         self.positions = [self.position]
 
