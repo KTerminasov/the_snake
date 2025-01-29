@@ -18,6 +18,19 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
+# Константный словарь с направлениями
+
+DIRECTIONS = {
+     (pygame.K_UP, LEFT): UP,
+     (pygame.K_UP, RIGHT): UP,
+     (pygame.K_DOWN, LEFT): DOWN,
+     (pygame.K_DOWN, RIGHT): DOWN,
+     (pygame.K_LEFT, UP): LEFT,
+     (pygame.K_LEFT, DOWN): LEFT,
+     (pygame.K_RIGHT, UP): RIGHT,
+     (pygame.K_RIGHT, DOWN): RIGHT
+}
+
 # Цвет фона - черный:
 BOARD_BACKGROUND_COLOR = (0, 0, 0)
 
@@ -163,17 +176,12 @@ def handle_keys(game_object, stop_game):
             pygame.quit()
             raise SystemExit
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and game_object.direction != DOWN:
-                game_object.next_direction = UP
-            elif event.key == pygame.K_DOWN and game_object.direction != UP:
-                game_object.next_direction = DOWN
-            elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
-                game_object.next_direction = LEFT
-            elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
-                game_object.next_direction = RIGHT
-            elif event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 raise SystemExit
+
+            game_object.next_direction = DIRECTIONS.get((event.key,
+                                                        game_object.direction))
 
 
 def main():
