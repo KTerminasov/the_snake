@@ -135,9 +135,6 @@ class Snake(GameObject):
 
     def draw(self):
         """Отрисовка змейки на экране с затиранием следа."""
-        for position in self.positions[:-1]:
-            self.draw_cell(position)
-
         # Отрисовка головы змейки
         self.draw_cell(self.positions[0])
 
